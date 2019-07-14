@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
+import Box from './Box.js';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      boxes:[]
+    }
+  }
+  addBox = () => {
+    this.setState(state => {
+      const boxes = state.boxes.concat(Math.floor(Math.random() * 10 + 1));
+      return {
+        boxes,
+      };
+    })
+  }
+  
+  removeBox = (removeIndex) => {
+    this.setState(state => {
+      const boxes = state.boxes.filter((box,index) => index !== removeIndex);
+
+      return {
+        boxes,
+      };
+    });
+  }
+
+  render() {
+    return (
+      <>
+      <div className='addBox' onClick={this.addBox}>
+        add box
+      </div>
+      <Box boxes={this.state} removeBox={this.removeBox}/>
+      </>
+    );
+  }
 }
 
 export default App;
